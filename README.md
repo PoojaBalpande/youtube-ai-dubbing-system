@@ -1,187 +1,207 @@
 # 🎬 AI Video Dubbing System
 
-An AI-powered video dubbing system that downloads a YouTube video, transcribes its speech, translates it to English, generates natural English speech, and produces a fully dubbed MP4 while preserving the original visuals.
+An end-to-end AI-powered YouTube Video Dubbing pipeline built with Python.
+
+This project automatically:
+
+- Downloads a YouTube video
+- Extracts high-quality audio
+- Converts speech into text using OpenAI Whisper
+- (Upcoming) Translates the transcript
+- (Upcoming) Generates AI voice using Edge TTS
+- (Upcoming) Merges dubbed audio with the original video
 
 ---
 
-## 📌 Project Goal
+# 🚀 Features
 
-Input:
+## ✅ Completed
 
-- YouTube Video URL
-
-Output:
-
-- English Dubbed MP4
-
-The system automatically performs:
-
-1. Download YouTube video
-2. Extract audio
-3. Transcribe speech
-4. Translate to English
-5. Generate English speech
-6. Replace original audio
-7. Export final dubbed video
-
----
-
-## 🚀 Current Progress
-
-### ✅ Day 1 Completed
-
-- Project setup
-- Modular architecture
-- Logging system
-- YouTube downloader using yt-dlp
+- YouTube video downloader using yt-dlp
 - Audio extraction using FFmpeg
+- Speech-to-text transcription using OpenAI Whisper
+- Structured logging
+- Configuration-driven architecture
+- Modular project structure
+- Production-style class design
 
-### 🔄 Upcoming
+## 🚧 Upcoming
 
-- Whisper transcription
-- Translation
-- Text-to-Speech
-- Audio merging
-- Multi-speaker support
-- Voice cloning
-
----
-
-## 🏗️ Project Architecture
-
-```
-User
- │
- ▼
-Enter YouTube URL
- │
- ▼
-YouTube Downloader
- │
- ▼
-Video (.mp4)
- │
- ▼
-Audio Extractor
- │
- ▼
-Audio (.wav)
- │
- ▼
-Whisper
- │
- ▼
-Transcript
- │
- ▼
-Translation
- │
- ▼
-English Text
- │
- ▼
-Edge TTS
- │
- ▼
-English Audio
- │
- ▼
-FFmpeg
- │
- ▼
-Dubbed Video (.mp4)
-```
+- Text Translation
+- AI Voice Generation (Edge TTS)
+- Audio Replacement
+- Final Video Rendering
+- Multi-language Support
 
 ---
 
-## 🛠️ Tech Stack
-
-| Component | Technology |
-|-----------|------------|
-| Language | Python 3.11 |
-| Downloader | yt-dlp |
-| Speech Recognition | OpenAI Whisper |
-| Translation | MarianMT / NLLB |
-| Text-to-Speech | Edge-TTS |
-| Video Processing | FFmpeg |
-| Progress UI | Rich |
-| Logging | Python Logging |
-| Configuration | python-dotenv |
-
----
-
-## 📁 Project Structure
+# 📂 Project Structure
 
 ```text
 youtube-ai-dubbing-system/
 
-├── audio/
 ├── downloader/
-├── transcription/
-├── translation/
-├── tts/
-├── utils/
-├── downloads/
-├── outputs/
-├── temp/
-├── logs/
-├── docs/
+│   └── youtube.py
 │
-├── main.py
+├── audio/
+│   ├── extractor.py
+│   └── merger.py
+│
+├── transcription/
+│   └── whisper_engine.py
+│
+├── translation/
+│   └── translator.py
+│
+├── tts/
+│   └── edge_tts_engine.py
+│
+├── utils/
+│   ├── logger.py
+│   └── helpers.py
+│
+├── downloads/
+├── temp/
+├── outputs/
+│
 ├── config.py
-├── README.md
+├── main.py
 ├── requirements.txt
-└── .env.example
+└── README.md
 ```
 
 ---
 
-## ⚙️ Installation
+# ⚙️ Tech Stack
 
-```bash
-git clone https://github.com/PoojaBalpande/youtube-ai-dubbing-system.git
+- Python 3.11
+- OpenAI Whisper
+- PyTorch
+- yt-dlp
+- FFmpeg
+- pathlib
+- logging
 
-cd youtube-ai-dubbing-system
+---
 
-python -m venv .venv
+# 📌 Current Pipeline
 
-.\.venv\Scripts\activate
-
-pip install -r requirements.txt
+```text
+YouTube URL
+      │
+      ▼
+Download Video
+      │
+      ▼
+Extract Audio
+      │
+      ▼
+Whisper Speech Recognition
+      │
+      ▼
+Transcript (.txt)
 ```
 
 ---
 
-## ▶️ Run
+# 🧠 Architecture
 
-```bash
-python main.py
+```text
+main.py
+
+     │
+
+     ▼
+
+YouTubeDownloader
+
+     │
+
+     ▼
+
+AudioExtractor
+
+     │
+
+     ▼
+
+WhisperEngine
+
+     │
+
+     ▼
+
+Transcript
 ```
 
 ---
 
-## 📅 Development Roadmap
+# 🧩 Modules
 
-- [x] Environment Setup
-- [x] Logging
-- [x] YouTube Downloader
-- [x] Audio Extraction
-- [ ] Whisper Transcription
-- [ ] Translation
-- [ ] Text-to-Speech
-- [ ] Audio Replacement
-- [ ] Final Dubbed Video
+## YouTubeDownloader
 
----
+Responsible for downloading YouTube videos.
 
-## 👩‍💻 Author
+## AudioExtractor
 
-**Pooja Balpande**
+Responsible for extracting WAV audio using FFmpeg.
 
-B.Tech Artificial Intelligence & Data Science
+## WhisperEngine
+
+Responsible for:
+
+- Loading Whisper model
+- Speech Recognition
+- Saving transcript
 
 ---
 
-## 📄 License
+# 📝 Logging
 
-This project is created for learning purposes as part of the Idealabs Digital AI Internship assignment.
+Every module uses a dedicated logger.
+
+Example:
+
+```
+Loading Whisper model...
+Downloading video...
+Extracting audio...
+Starting transcription...
+Transcription completed successfully.
+Transcript saved...
+```
+
+---
+
+# 🔧 Configuration
+
+Configuration is managed through `config.py`.
+
+Examples:
+
+- Whisper Model
+- Device
+- Output Directories
+- Beam Size
+- Temperature
+
+---
+
+# 📅 Development Progress
+
+## ✅ Day 1
+
+- Project setup
+- Logging
+- Downloader
+- Audio Extraction
+
+## ✅ Day 2
+
+- Whisper Integration
+- Speech Recognition
+- Transcript Generation
+
+## 🔜 Day 3
+
+- Translation

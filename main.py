@@ -1,6 +1,7 @@
 from audio.extractor import AudioExtractor
 from downloader.youtube import YouTubeDownloader
 from utils.logger import get_logger
+from transcription.whisper_engine import WhisperEngine
 
 
 def main() -> None:
@@ -14,6 +15,7 @@ def main() -> None:
 
     downloader = YouTubeDownloader()
     extractor = AudioExtractor()
+    transcriber = WhisperEngine()
 
     try:
         # Download video
@@ -23,6 +25,10 @@ def main() -> None:
         # Extract audio
         audio_path = extractor.extract(video_path)
         logger.info(f"Audio saved to: {audio_path}")
+        
+        result = transcriber.transcribe(audio_path)
+        transcript_path = transcriber.save_transcript(result["text"])
+        logger.info(f"Transcript saved at: {transcript_path}")
 
     except Exception as error:
         logger.exception(f"Application failed: {error}")
@@ -30,3 +36,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
