@@ -1,0 +1,55 @@
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ==========================
+# Virtual Environment
+# ==========================
+.venv/
+venv/
+
+# ==========================
+# Environment Variables
+# ==========================
+.env
+
+# ==========================
+# Logs
+# ==========================
+logs/
+*.log
+
+# ==========================
+# Generated Files
+# ==========================
+downloads/
+outputs/
+temp/
+
+# ==========================
+# VS Code
+# ==========================
+.vscode/
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+
+downloads/*
+!downloads/.gitkeep
+
+outputs/*
+!outputs/.gitkeep
+
+temp/*
+!temp/.gitkeep
+
+logs/*
+!logs/.gitkeep
+*.log
