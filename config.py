@@ -31,3 +31,7 @@ TEMPERATURE = 0.0
 
 # Output
 TRANSCRIPT_FILE = OUTPUT_DIR / "transcript.txt"
+
+TRANSLATION_MODEL = "Helsinki-NLP/opus-mt-hi-en"
+
+TRANSLATION_OUTPUT_FILE = OUTPUT_DIR / "translated_transcript.txt"
