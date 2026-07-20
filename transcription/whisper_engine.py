@@ -1,6 +1,7 @@
 from pathlib import Path
 import whisper
 from utils.logger import get_logger
+from models.segment import TranscriptSegment
 from config import (
     WHISPER_MODEL,
     DEVICE,
@@ -72,3 +73,26 @@ class WhisperEngine:
         logger.info(f"Transcript saved to: {TRANSCRIPT_FILE}")
 
         return TRANSCRIPT_FILE
+
+    def transcribe_segments(self, audio_path: Path) -> list[TranscriptSegment]:
+        """
+        Transcribe an audio file and return a list of structured TranscriptSegment objects.
+
+        This method leverages the existing transcribe() method to generate transcripts,
+        preserving backward compatibility, and maps the output segments directly to
+        the TranscriptSegment data model.
+        """
+        result = self.transcribe(audio_path)
+        raw_segments = result.get("segments", [])
+
+        segments = []
+        for raw_seg in raw_segments:
+            segment = TranscriptSegment(
+                start=float(raw_seg["start"]),
+                end=float(raw_seg["end"]),
+                original_text=raw_seg["text"].strip()
+            )
+            segments.append(segment)
+
+        logger.info(f"Successfully converted {len(segments)} segments to TranscriptSegment objects.")
+        return segments
