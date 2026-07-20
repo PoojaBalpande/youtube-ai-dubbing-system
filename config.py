@@ -35,3 +35,11 @@ TRANSCRIPT_FILE = OUTPUT_DIR / "transcript.txt"
 TRANSLATION_MODEL = "Helsinki-NLP/opus-mt-hi-en"
 
 TRANSLATION_OUTPUT_FILE = OUTPUT_DIR / "translated_transcript.txt"
+
+# Text-to-Speech (Edge TTS)
+
+TTS_VOICE = "en-US-AriaNeural"
+
+TTS_RATE = "+0%"
+
+TTS_OUTPUT_FILE = OUTPUT_DIR / "translated_audio.mp3"

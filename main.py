@@ -3,6 +3,7 @@ from downloader.youtube import YouTubeDownloader
 from transcription.whisper_engine import WhisperEngine
 from translation.translator import Translator
 from utils.logger import get_logger
+from tts.tts import TextToSpeech
 
 
 def main() -> None:
@@ -42,6 +43,13 @@ def main() -> None:
         translation_path = translator.save_translation(
             translated_text
         )
+        
+        # Synthesize translated text to speech
+        tts = TextToSpeech()
+
+        audio_path = tts.synthesize(translated_text)
+
+        print(f"TTS Audio Saved: {audio_path}")
 
         logger.info(
             f"Translated transcript saved at: {translation_path}"
