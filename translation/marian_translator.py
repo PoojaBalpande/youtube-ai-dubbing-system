@@ -71,9 +71,10 @@ class MarianTranslator(BaseTranslator):
 
         logger.info("Splitting transcript into chunks...")
 
+        chunk_size = getattr(config, "MAX_CHUNK_LENGTH", 80)
         chunks: list[str] = TextSplitter.split_into_chunks(
             text,
-            chunk_size=80,
+            chunk_size=chunk_size,
         )
 
         logger.info(f"Total chunks: {len(chunks)}")

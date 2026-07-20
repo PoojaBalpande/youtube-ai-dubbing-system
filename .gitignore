@@ -5,6 +5,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.pyc
 
 # ==========================
 # Virtual Environment
@@ -24,32 +25,28 @@ logs/
 *.log
 
 # ==========================
-# Generated Files
+# Media & Audio Files
+# ==========================
+*.wav
+*.mp3
+*.mp4
+*.m4a
+
+# ==========================
+# Generated Folders
 # ==========================
 downloads/
 outputs/
 temp/
 
 # ==========================
-# VS Code
+# IDE Configuration
 # ==========================
 .vscode/
+.idea/
 
 # ==========================
 # OS Files
 # ==========================
 .DS_Store
 Thumbs.db
-
-downloads/*
-!downloads/.gitkeep
-
-outputs/*
-!outputs/.gitkeep
-
-temp/*
-!temp/.gitkeep
-
-logs/*
-!logs/.gitkeep
-*.log

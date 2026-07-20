@@ -121,9 +121,10 @@ class GroqTranslator(BaseTranslator):
 
         logger.info("Starting Groq translation...")
 
+        chunk_size = getattr(config, "GROQ_CHUNK_SIZE", 80)
         chunks: list[str] = TextSplitter.split_into_chunks(
             text,
-            chunk_size=80,
+            chunk_size=chunk_size,
         )
 
         logger.info(f"Total chunks to translate: {len(chunks)}")

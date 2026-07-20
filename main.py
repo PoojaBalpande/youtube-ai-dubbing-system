@@ -5,7 +5,6 @@ from downloader.youtube import YouTubeDownloader
 from transcription.whisper_engine import WhisperEngine
 from translation.translator import Translator
 from utils.logger import get_logger
-from tts.tts import TextToSpeech
 from audio.merger import AudioMerger
 
 
@@ -15,6 +14,10 @@ def main() -> None:
     """
 
     logger = get_logger(__name__)
+
+    # Centralized Configuration & Dependency Validation
+    from utils.validator import validate_config
+    validate_config()
 
     url = input("Enter YouTube URL: ").strip()
 
@@ -66,11 +69,6 @@ def main() -> None:
             translated_text
         )
         
-        # Synthesize translated text to speech (retains old single-track TTS compatibility)
-        tts = TextToSpeech()
-        translated_audio_path = tts.synthesize(translated_text)
-        print(f"Old TTS Audio Saved: {translated_audio_path}")
-
         # Stitch individual segment audios into a single synchronized final WAV audio track
         from timing.audio_stitcher import AudioStitcher
         stitcher = AudioStitcher()
@@ -88,8 +86,7 @@ def main() -> None:
             output_path=config.DUBBED_VIDEO_OUTPUT, 
         )
         
-        print(config)
-        print(config.__file__) 
+        logger.debug(f"Loaded config module path: {config.__file__}")
 
         logger.info("Pipeline completed successfully.")
         

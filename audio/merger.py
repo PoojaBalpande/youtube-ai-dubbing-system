@@ -83,8 +83,10 @@ class AudioMerger:
                 text=True,
             )
             
-            print(result.stdout)
-            print(result.stderr)
+            if result.stdout:
+                self.logger.debug(f"FFmpeg stdout: {result.stdout.strip()}")
+            if result.stderr:
+                self.logger.debug(f"FFmpeg stderr: {result.stderr.strip()}")
 
             self.logger.info("Audio merged successfully.")
             self.logger.info(f"Dubbed video saved to: {output_path}")

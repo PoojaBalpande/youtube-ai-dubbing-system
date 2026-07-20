@@ -20,7 +20,10 @@ def get_logger(name: str) -> logging.Logger:
     if logger.handlers:
         return logger
 
-    logger.setLevel(logging.INFO)
+    import config
+    log_level_str = getattr(config, "LOG_LEVEL", "INFO").upper()
+    level = getattr(logging, log_level_str, logging.INFO)
+    logger.setLevel(level)
 
     formatter = logging.Formatter(
         fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",

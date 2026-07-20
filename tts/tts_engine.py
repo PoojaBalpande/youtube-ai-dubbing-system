@@ -29,10 +29,10 @@ class SegmentTTS:
 
     def __init__(self) -> None:
         """Initialize and create temporary output directories."""
-        self.voice: str = getattr(config, "TTS_VOICE", "en-US-AriaNeural")
         self.default_rate_str: str = getattr(config, "TTS_RATE", "+0%")
         self.temp_dir: Path = Path(getattr(config, "TEMP_DIR", "temp")) / "tts"
         self.temp_dir.mkdir(parents=True, exist_ok=True)
+        self.retry_count: int = getattr(config, "TTS_RETRY_COUNT", 1)
 
     async def _generate_speech(self, text: str, output_path: Path, rate: str, voice: str) -> None:
         """
@@ -90,25 +90,31 @@ class SegmentTTS:
         from tts.voice_selector import select_voice
         voice = select_voice(segment)
 
-        # Primary generation try-except (with retry)
-        try:
-            logger.info(f"Generating segment {index} using voice {voice}... Text: '{text[:30]}...'")
-            self._run_synthesis(text, output_path, rate_str, voice)
-        except Exception as error:
-            logger.warning(f"Synthesis failed for segment {index}: {error}. Retrying once...")
+        # Loop retry generation
+        success = False
+        for attempt in range(self.retry_count + 1):
             try:
+                if attempt == 0:
+                    logger.info(f"Generating segment {index} using voice {voice}... Text: '{text[:30]}...'")
+                else:
+                    logger.warning(f"Synthesis attempt {attempt} failed for segment {index}. Retrying (attempt {attempt + 1}/{self.retry_count + 1})...")
                 self._run_synthesis(text, output_path, rate_str, voice)
-            except Exception as retry_error:
-                logger.error(f"Retry synthesis failed for segment {index}: {retry_error}")
-                # Create empty file so stitching/subsequent phases don't fail, and return graceful metadata
-                output_path.touch()
-                return SegmentAudio(
-                    file_path=str(output_path),
-                    expected_duration=expected,
-                    actual_duration=0.0,
-                    timing_difference=-expected,
-                    sync_action="none"
-                )
+                success = True
+                break
+            except Exception as error:
+                logger.error(f"Synthesis error on attempt {attempt + 1}: {error}")
+
+        if not success:
+            logger.error(f"All synthesis attempts ({self.retry_count + 1}) failed for segment {index}.")
+            # Create empty file so stitching/subsequent phases don't fail, and return graceful metadata
+            output_path.touch()
+            return SegmentAudio(
+                file_path=str(output_path),
+                expected_duration=expected,
+                actual_duration=0.0,
+                timing_difference=-expected,
+                sync_action="none"
+            )
 
         # Measure actual duration of generated file
         actual = calculate_actual_duration(output_path)

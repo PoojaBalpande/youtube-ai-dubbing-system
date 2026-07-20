@@ -32,13 +32,17 @@ class AudioExtractor:
 
         self.logger.info("Extracting audio...")
 
+        import config
+        channels = getattr(config, "AUDIO_EXTRACT_CHANNELS", 1)
+        sample_rate = getattr(config, "AUDIO_EXTRACT_SAMPLE_RATE", 16000)
+
         (
             ffmpeg
             .input(str(video_path))
             .output(
                 str(output_audio),
-                ac=1,
-                ar=16000,
+                ac=channels,
+                ar=sample_rate,
                 vn=None,
             )
             .overwrite_output()

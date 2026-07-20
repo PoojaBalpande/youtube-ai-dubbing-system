@@ -52,12 +52,16 @@ class YouTubeDownloader:
         self.logger.info(f"Title: {info['title']}")
         self.logger.info(f"Duration: {info['duration']} seconds")
 
+        import config
+        ytdlp_format = getattr(config, "YTDLP_FORMAT", "bestvideo+bestaudio/best")
+        ytdlp_merge = getattr(config, "YTDLP_MERGE_OUTPUT_FORMAT", "mp4")
+
         output_template = str(self.download_dir / "%(title)s.%(ext)s")
 
         ydl_opts = {
-            "format": "bestvideo+bestaudio/best",
+            "format": ytdlp_format,
             "outtmpl": output_template,
-            "merge_output_format": "mp4",
+            "merge_output_format": ytdlp_merge,
         }
 
         self.logger.info("Downloading video...")

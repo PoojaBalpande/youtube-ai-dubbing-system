@@ -27,9 +27,8 @@ logger = get_logger(__name__)
 # Registry of supported translator providers.
 #
 # Each key maps to a tuple of (module_path, class_name). Imports are
-# deferred (lazy) so that heavy dependencies like MarianMT or Gemini
-# SDK are only loaded when the corresponding provider is actually
-# selected — not at module import time.
+# deferred (lazy) so that heavy dependencies like MarianMT or Groq SDK
+# are only loaded when the corresponding provider is actually selected.
 # ---------------------------------------------------------------------------
 
 _TRANSLATOR_REGISTRY: dict[str, tuple[str, str]] = {
@@ -40,10 +39,6 @@ _TRANSLATOR_REGISTRY: dict[str, tuple[str, str]] = {
     "groq": (
         "translation.groq",
         "GroqTranslator",
-    ),
-    "indic": (
-        "translation.future.indic_translator",
-        "IndicTranslator",
     ),
 }
 
@@ -72,7 +67,7 @@ def get_translator(provider: str | None = None) -> BaseTranslator:
     Example::
 
         translator = get_translator()           # uses config default
-        translator = get_translator("gemini")   # explicit override
+        translator = get_translator("groq")     # explicit override
         translated = translator.translate("नमस्ते दोस्तों")
     """
 
