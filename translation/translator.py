@@ -37,9 +37,9 @@ _TRANSLATOR_REGISTRY: dict[str, tuple[str, str]] = {
         "translation.marian_translator",
         "MarianTranslator",
     ),
-    "gemini": (
-        "translation.gemini_translator",
-        "GeminiTranslator",
+    "groq": (
+        "translation.groq",
+        "GroqTranslator",
     ),
     "indic": (
         "translation.future.indic_translator",

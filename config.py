@@ -1,7 +1,12 @@
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Project root directory
 PROJECT_ROOT = Path(__file__).resolve().parent
+
+# Load environment variables
+load_dotenv(PROJECT_ROOT / ".env")
 
 # Application directories
 DOWNLOAD_DIR = PROJECT_ROOT / "downloads"
@@ -41,8 +46,8 @@ TRANSLATION_OUTPUT_FILE = OUTPUT_DIR / "translated_transcript.txt"
 TRANSLATED_SEGMENTS_JSON = OUTPUT_DIR / "translated_segments.json"
 
 # --- Translator Provider Selection ---
-# Supported values: "marian", "gemini", "indic"
-TRANSLATOR_PROVIDER = "gemini"
+# Supported values: "marian", "groq", "indic"
+TRANSLATOR_PROVIDER = os.getenv("TRANSLATION_PROVIDER", "groq")
 
 # --- Context Window Configuration ---
 CONTEXT_WINDOW = 3
@@ -51,11 +56,10 @@ CONTEXT_WINDOW = 3
 ENABLE_TRANSLATION_FALLBACK = True
 FALLBACK_TRANSLATOR = "marian"
 
-# --- Gemini Translator Configuration ---
-# Gemini API model: "gemini-1.5-flash" (fast, lightweight) or "gemini-pro"
-GEMINI_MODEL = "gemini-1.5-flash"
-GEMINI_API_KEY = ""  # Provide a valid key here or set GEMINI_API_KEY env variable
-GEMINI_TRANSLATION_PROMPT = """Translate the following text to English naturally.
+# --- Groq Translator Configuration ---
+GROQ_MODEL = os.getenv("GROQ_MODEL")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+GROQ_TRANSLATION_PROMPT = """Translate the following text to English naturally.
 The meaning, names, cities, organizations, brands, idioms, slang, conversational tone, and emotions must be preserved.
 Do not translate literally. Keep punctuation natural.
 Do not add any explanations, notes, or preambles. Return ONLY the translated text.
