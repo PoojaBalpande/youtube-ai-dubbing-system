@@ -10,3 +10,5 @@ tqdm
 edge-tts
 sacremoses
 groq
+pyannote.audio
+TTS

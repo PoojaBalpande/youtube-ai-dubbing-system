@@ -50,3 +50,28 @@ temp/
 # ==========================
 .DS_Store
 Thumbs.db
+
+# Virtual environments
+.venv/
+.venv_xtts/
+
+# Python
+__pycache__/
+*.pyc
+
+# Outputs
+outputs/
+downloads/
+temp/
+logs/
+
+# Models
+model_cache/
+checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env

@@ -1,0 +1,18 @@
+# Stable mutually compatible dependencies for XTTS environment on Python 3.10 and Windows 11
+--index-url https://download.pytorch.org/whl/cpu
+
+# Core Deep Learning Libraries
+torch==2.5.1
+torchaudio==2.5.1
+
+# Scientific & Data Processing (Must be numpy 1.x for compatibility with numba and compiled PyTorch)
+numpy==1.26.4
+scipy==1.15.3
+
+# Hugging Face ecosystem (Transformers v4.x to avoid removal of isin_mps_friendly in v5.x)
+transformers==4.57.6
+huggingface-hub==0.36.2
+
+# Main Voice Synthesis Engine (Community-maintained fork with precompiled Windows wheels)
+coqui-tts==0.27.5
+monotonic-alignment-search==0.2.1

@@ -79,45 +79,41 @@ The YouTube AI Video Dubbing System converts a YouTube video into a dubbed versi
 ```text
 youtube-ai-dubbing-system/
 │
-├── audio/                      # Audio utilities
-│   ├── converter.py            # MP3 to standardized WAV format converter
-│   ├── extractor.py            # Extracts audio tracks from video files
-│   └── merger.py               # Merges dubbed audio tracks onto videos
+├── app/                        # All application source packages
+│   ├── audio/                  # Audio utilities (converter, extractor, merger)
+│   ├── batch/                  # Batch processing module
+│   ├── diarization/            # Speaker diarization modules
+│   ├── downloader/             # Video downloading module (yt-dlp)
+│   ├── emotion/                # Emotion detection for voiceovers
+│   ├── media_quality/          # Loudness and visual sync enhancements
+│   ├── models/                 # Shared data structures (TranscriptSegment, SegmentAudio)
+│   ├── pipeline/               # Main dubbing orchestration module (runner)
+│   ├── timing/                 # Timeline synchronizations and audio stitching
+│   ├── transcription/          # Speech-to-Text module (Whisper)
+│   ├── translation/            # Swappable translation strategy engines (Marian, Groq)
+│   ├── tts/                    # Segment-wise speech synthesis engine (Edge, XTTS)
+│   ├── utils/                  # Core helpers and validator checks
+│   └── voice_cloning/          # XTTS voice cloner and embedding cache
 │
-├── downloader/                 # Video downloading module
-│   └── youtube.py              # Download YouTube streams using yt-dlp
+├── config/                     # Application configuration packages
+│   ├── __init__.py
+│   └── settings.py             # Central configuration file
 │
-├── models/                     # Shared data schemas
-│   └── segment.py              # TranscriptSegment & SegmentAudio definitions
+├── tests/                      # Testing package
+│   ├── __init__.py
+│   └── test_integration.py     # Integration test suite
 │
-├── timing/                     # Synchronization & timeline compiling
-│   ├── audio_stitcher.py       # Stitches segment audios with silence padding
-│   ├── duration.py             # Computes expected vs actual durations via ffprobe
-│   └── sync.py                 # Synchronization strategy thresholds
+├── scripts/                    # Developer utility & diagnostic scripts
+│   ├── test_xtts.py
+│   ├── test_xtts_load.py
+│   └── testdia.py
 │
-├── transcription/              # Speech-to-Text module
-│   └── whisper_engine.py       # Transcribes speech into segments via Whisper
-│
-├── translation/                # Translation module
-│   ├── base.py                 # Abstract base strategy
-│   ├── context_builder.py      # Preserves text context using window grouping
-│   ├── groq.py                 # Primary translator using Groq SDK
-│   ├── marian_translator.py    # Fallback offline translator using MarianMT
-│   ├── text_splitter.py        # Splits transcripts into manageable chunks
-│   └── translator.py           # Swappable strategy wrapper & factory registry
-│
-├── tts/                        # Text-to-Speech module
-│   ├── tts_engine.py           # Segment-wise speech synthesis engine
-│   └── voice_selector.py       # Selects appropriate voices dynamically
-│
-├── utils/                      # Core helpers
-│   ├── logger.py               # Standardized logging setup
-│   └── validator.py            # Startup configuration & dependency checks
+├── docs/                       # Project documentation
+│   └── project_architecture_report.md
 │
 ├── .env.example                # Template for environment configuration
-├── config.py                   # Centralized application configurations
-├── main.py                     # Pipeline execution runner
-├── requirements.txt            # Python dependencies
+├── main.py                     # CLI pipeline execution entrypoint
+├── requirements.txt            # Python dependencies list
 └── README.md                   # Project documentation
 ```
 
